@@ -10,6 +10,12 @@ from math import log10, sqrt
 import wavio
 
 def plot_data(y, factor=2, interpolate=True):
+	'''
+	Plot the data using the matplotlib library.
+
+	Arguments:
+	interpolate : Wheter we so
+	'''
 	x = range(len(y))
 	print x,y
 	import matplotlib.pyplot as plt
