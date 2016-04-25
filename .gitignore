@@ -64,3 +64,6 @@ target/
 
 # Python virtual environment
 virenv/
+
+# Redis dumps
+*.rdb
