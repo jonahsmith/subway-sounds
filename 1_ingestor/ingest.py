@@ -20,7 +20,7 @@ purple = redis.Redis(db=3)
 r = requests.get(URL, stream=True)
 
 # Iterate through the messages in the stream indefinitely
-for line in r.iter_lines(chunk_size=10):
+for line in r.iter_lines():
     if line:
         data = json.loads(line)
         timestamp = data['time']

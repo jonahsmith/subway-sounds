@@ -17,7 +17,7 @@ def listen(listen_socket):
         # for the HTTP stream.
         client_connection.recv(1024)
         # Send the HTTP response header
-        client_connection.sendall('HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n')
+        client_connection.sendall('HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nTransfer-Encoding: chunked\r\n\r\n')
         clients.append( (client_connection, client_address) )
 
 
@@ -26,6 +26,10 @@ def sender():
     while 1:
         # Read the new data from stdin
         line = stdin.readline()
+        # For Transfer-Encoding: chunked, you need to send the content size, in
+        # octets, encoded as hex, in an ascii string, followed by rn, followed
+        # by the message.
+        line = '{:X}\r\n{}\r\n'.format(len(line), line)
 
         broken = []
         # Send the update to all the clients
