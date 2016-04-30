@@ -21,5 +21,6 @@ print(filename)
 print('Original:   {:+.2f} dB'.format(20*np.log10(rms_flat(x))))
 b, a = A_weighting(fs)
 y = lfilter(b, a, x)
-x,fs = 0,0,bits
+x,fs = 0,0
+bits = 0
 print('A-weighted: {:+.2f} dB'.format(20*np.log10(rms_flat(y))))
