@@ -9,7 +9,7 @@ body {
 
 .container {
   max-width: 110%;
-  transform: translateX(-0%) translateY(-0%);
+  transform: translateX(-0%) translateY(-15%);
   min-width: 100%; 
   min-height: 100%; 
   width: 100%; 
