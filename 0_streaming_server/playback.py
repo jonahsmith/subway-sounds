@@ -5,7 +5,7 @@ import json
 import time
 from data import concourse_2_60, train_1_2_3_day_1_60, train_1_2_3_day_2_60, weekday_day1
 
-chunks_per_minute = 30
+chunks_per_minute = 60
 
 
 
