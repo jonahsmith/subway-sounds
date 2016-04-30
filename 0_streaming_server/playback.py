@@ -28,6 +28,8 @@ while 1:
     data['readings'] = {}
     data['readings']['street'] = weekday_day1[index]
     data['readings']['s'] = concourse_2_60[index]
+    data['readings']['1-2-3'] = train_1_2_3_day_1_60[index]
+    data['readings']['7'] = train_1_2_3_day_2_60[index]
     print(json.dumps(data))
 
     index +=1
