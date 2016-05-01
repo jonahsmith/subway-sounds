@@ -5,6 +5,7 @@ import json
 import time
 from datetime import datetime, timedelta, date
 from sys import stdout
+import trains
 
 
 PAUSE = 5
@@ -53,6 +54,11 @@ def get_stats(level_name, values):
     return data
 
 
+
+def get_trains():
+    return trains.get_schedule()
+
+
 def global_setup():
     # Establish the historical data dictionaries
     global today, yesterday
@@ -79,6 +85,11 @@ def main():
         s_stats = get_stats('s', get_values(s))
         red_stats = get_stats('red', get_values(red))
         purple_stats = get_stats('purple', get_values(purple))
+
+        trains = get_trains()
+
+        s_stats['trains'] = trains['S']
+        red_stats['trains'] = trains['1-2-3']
 
         payload = {
                     'surface': street_stats,
