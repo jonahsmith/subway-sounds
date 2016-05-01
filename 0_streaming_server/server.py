@@ -1,3 +1,15 @@
+# server.py
+# Subway Sounds, written for Storytelling with Streaming Data, Columbia University
+# May 2016
+#
+# This script acts like websocketd for long-lived HTTP streams. It receives
+# arbitrary input from stdin and forwards it to all subscribers via a long-lived
+# HTTP connection implemented using raw TCP sockets.
+#
+# In the context of this project, this script ensures that any clients that
+# connect are receiving the same data at the same time, which is functionality
+# that is not easy to implement in traditional web frameworks like Flask.
+
 import socket
 from sys import stdin
 import threading
@@ -6,6 +18,10 @@ import threading
 PORT = 6998
 # A global list of currently connected clients (e.g. subscribers)
 clients = []
+
+# A lock to keep terrible things from happening to the client list because of
+# concurrent looping, additions, or removals.
+client_lock = threading.Lock()
 
 
 def listen(listen_socket):
@@ -17,8 +33,12 @@ def listen(listen_socket):
         # for the HTTP stream.
         client_connection.recv(1024)
         # Send the HTTP response header
-        client_connection.sendall('HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nTransfer-Encoding: chunked\r\n\r\n')
-        clients.append( (client_connection, client_address) )
+        client_connection.sendall('HTTP/1.1 200 OK\r\n'
+                                  'Content-Type: application/json\r\n'
+                                  'Transfer-Encoding: chunked\r\n'
+                                  '\r\n')
+        with client_lock:
+            clients.append( (client_connection, client_address) )
 
 
 def sender():
@@ -32,23 +52,26 @@ def sender():
         line = '{:X}\r\n{}\r\n'.format(len(line), line)
 
         broken = []
-        # Send the update to all the clients
-        for client in clients:
-            try:
-                client[0].sendall(line)
-            except socket.error:
-                # If the connection is broken (e.g. someone has disconnected),
-                # take note for later removal.
-                broken.append(client)
+        with client_lock:
+            # Send the update to all of the clients
+            for client in clients:
+                try:
+                    client[0].sendall(line)
+                except socket.error:
+                    # If the connection is broken (e.g. someone has disconnected),
+                    # take note for later removal.
+                    broken.append(client)
 
-        # Prune the closed connections
-        for broke in broken:
-            broke[0].close()
-            print('{} has closed their connection'.format(broke[1]))
-            clients.remove(broke)
+            # Prune the closed connections
+            for broke in broken:
+                broke[0].close()
+                print('{} has closed their connection'.format(broke[1]))
+                clients.remove(broke)
 
 
 def setup_socket():
+    # Boilerplate to set up a TCP connection, make it immediately available, and
+    # bind it to the listenign port.
     listen_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     listen_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     listen_socket.bind(('', PORT))
