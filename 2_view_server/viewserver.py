@@ -26,7 +26,7 @@ def create_history(date):
     """A factory function for historical data containers"""
     history = {
                 'max': {level: make_reading((None, 0)) for level in ['street', 's', 'red', 'purple']},
-                'min': {level: make_reading((None, int('inf'))) for level in ['street', 's', 'red', 'purple']},
+                'min': {level: make_reading((None, float('inf'))) for level in ['street', 's', 'red', 'purple']},
                 'date': date
               }
     return history
@@ -120,10 +120,10 @@ def send():
         purple_stats = get_stats('purple', get_values(purple))
 
         # Get the next arriving and departing trains using our library
-        trains = trains.get_schedule()
+        train_times = trains.get_schedule()
         # and add them to the data for those platforms
-        s_stats['trains'] = trains['S']
-        red_stats['trains'] = trains['1-2-3']
+        s_stats['trains'] = train_times['S']
+        red_stats['trains'] = train_times['1-2-3']
 
         # Construct the data structure for the JSON string.
         payload = {
