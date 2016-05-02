@@ -59,7 +59,7 @@ while 1:
     if index >= total:
         index = 0
     data = {}
-    data['time'] = int(time.time())
+    data['time'] = int(time.time()) # We use UNIX epoch time. Since the standard datetime has issues with JSON
     data['readings'] = {}
     data['readings']['street'] = static_data['1_street.WAV.json']['A-weighted'][index]
     data['readings']['s'] = static_data['2_concourse.WAV.json']['A-weighted'][index]
