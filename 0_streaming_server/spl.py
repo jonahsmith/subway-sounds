@@ -6,11 +6,13 @@ Calculate Sound Pressure Levels
 '''
 import numpy as np
 from math import log10, sqrt
+import json
 
 from A_weighting import A_weighting
 import wavio
+from scipy.signal import lfilter
 
-def plot_data(y, factor=2, interpolate=True):
+def plot_data(y, factor=4, interpolate=True):
 	'''
 	Plot the data using the matplotlib library.
 
@@ -87,19 +89,18 @@ def getdecibels(filename, chunks=None, chunk_factor=1):
 	dbs_a = []
 	for chunk in chunks:
 		dbs.append(20*np.log10(rms_flat(chunk)))
-		y = lfilter(b, a, x)
+
+		y = lfilter(b, a, chunk)
 		dbs_a.append(20*np.log10(rms_flat(y)))
 
-	dbs_orig = [20*log10( sqrt(np.mean(chunk**2)) ) for chunk in chunks]
 
-	return dbs,dbs_a,dbs_orig
+	return dbs,dbs_a
 
 if __name__ == '__main__':
-	# Uncomment the next line to use precalculated values.
-	#from data import concourse_2_60, train_1_2_3_day_1_60, train_1_2_3_day_2_60, weekday_day1
 
-	dbs,dbs_a,dbs_orig = getdecibels('/Users/sag47/Downloads/Cecilia.WAV', chunk_factor=60)
-	print dbs
-	print dbs_a
-	print dbs_orig
-	# plot_data(weekday_day1, factor=5, interpolate=True)
+	path = '/Users/sag47/Downloads/snippets/5yards.wav'
+
+
+	dbs,dbs_a = getdecibels(path, chunk_factor=60)
+	data = {'path':path, "Original":dbs,"A-weighted":dbs_a}
+	json.dump(data,open(path+'.json','w'))
