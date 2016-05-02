@@ -35,6 +35,10 @@ for f in ['1_street.WAV.json', '2_concourse.WAV.json', '3_1-2-3.WAV.json', '4_7.
 total = len(static_data[min(static_data, key=lambda k: len(static_data[k]))]['A-weighted'])
 index = 0
 
+
+def calibrate(value, calibration_constant = -6):
+    return round(float(value) - 6,2)
+
 while 1:
     if index >= total:
         index = 0
@@ -45,6 +49,12 @@ while 1:
     data['readings']['s'] = static_data['2_concourse.WAV.json']['A-weighted'][index]
     data['readings']['1-2-3'] = static_data['3_1-2-3.WAV.json']['A-weighted'][index]
     data['readings']['7'] = static_data['4_7.WAV.json']['A-weighted'][index]
+
+
+    #Apply calibration to the reading
+
+    for level in data['readings']:
+        data['readings'][level] = calibrate(data['readings'][level])
     print(json.dumps(data))
 
     index +=1
