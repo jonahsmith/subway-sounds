@@ -74,5 +74,8 @@ while 1:
     print(json.dumps(data))
 
     index +=1
+
+
+    # Sleep for the duration of a chunk. This will then simulate a real data stream.
     time.sleep(time_per_chunk)
     stdout.flush()
