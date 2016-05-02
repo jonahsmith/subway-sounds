@@ -7,6 +7,7 @@ Calculate Sound Pressure Levels
 import numpy as np
 from math import log10, sqrt
 
+from A_weighting import A_weighting
 import wavio
 
 def plot_data(y, factor=2, interpolate=True):
@@ -37,6 +38,13 @@ def plot_data(y, factor=2, interpolate=True):
 	plt.ylabel('Sound Level')
 	plt.show()	
 	return None
+
+
+def rms_flat(a):  # from matplotlib.mlab
+    """
+    Return the root mean square of all the elements of *a*, flattened out.
+    """
+    return np.sqrt(np.mean(np.absolute(a)**2))
 
 def getdecibels(filename, chunks=None, chunk_factor=1):
 	'''
@@ -73,14 +81,25 @@ def getdecibels(filename, chunks=None, chunk_factor=1):
 	wavdata = 0 
 
 	#dB SPL is basically dB = 20 * log10(amplitude)
-	dbs = [20*log10( sqrt(np.mean(chunk**2)) ) for chunk in chunks]
+	dbs = []
+	b,a = A_weighting(samprate)
 
-	return dbs
+	dbs_a = []
+	for chunk in chunks:
+		dbs.append(20*np.log10(rms_flat(chunk)))
+		y = lfilter(b, a, x)
+		dbs_a.append(20*np.log10(rms_flat(y)))
+
+	dbs_orig = [20*log10( sqrt(np.mean(chunk**2)) ) for chunk in chunks]
+
+	return dbs,dbs_a,dbs_orig
 
 if __name__ == '__main__':
 	# Uncomment the next line to use precalculated values.
 	#from data import concourse_2_60, train_1_2_3_day_1_60, train_1_2_3_day_2_60, weekday_day1
 
-	dbs = getdecibels('/Users/sag47/Downloads/Cecilia.WAV', chunk_factor=60)
+	dbs,dbs_a,dbs_orig = getdecibels('/Users/sag47/Downloads/Cecilia.WAV', chunk_factor=60)
 	print dbs
+	print dbs_a
+	print dbs_orig
 	# plot_data(weekday_day1, factor=5, interpolate=True)
