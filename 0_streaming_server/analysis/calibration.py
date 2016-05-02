@@ -32,12 +32,20 @@ for f in files:
 
 
 # Linear Regression to figure out the sound at the nozzle.
+
+#scikit-learn requires a Numpy Array
 X = np.array(x)
 X = X.reshape(6,1)
 Y = np.array(dbs)
 
+
+# We use the standard regression
 regr = linear_model.LinearRegression()
+
+# Train the model on our dataset
 regr.fit(X, Y)
+
+# print the coefficients and the value at zero distance
 print 
 print('Coefficients: \n', regr.coef_)
 print "at zero distance :",regr.predict([0])
