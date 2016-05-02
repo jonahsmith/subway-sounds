@@ -26,7 +26,7 @@ def create_history(date):
     """A factory function for historical data containers"""
     history = {
                 'max': {level: make_reading((None, 0)) for level in ['street', 's', 'red', 'purple']},
-                'min': {level: make_reading((None, float('inf'))) for level in ['street', 's', 'red', 'purple']},
+                'min': {level: make_reading((None, 999)) for level in ['street', 's', 'red', 'purple']},
                 'date': date
               }
     return history
@@ -119,8 +119,16 @@ def send():
         red_stats = get_stats('red', get_values(red))
         purple_stats = get_stats('purple', get_values(purple))
 
-        # Get the next arriving and departing trains using our library
-        train_times = trains.get_schedule()
+        # Get the next arriving and departing trains using our library. Google's
+        # code inexplicably breaks in spectacular fashion every once in a while,
+        # so we'll loop until we can get it.
+        train_times = {}
+        while not train_times:
+            try:
+                train_times = trains.get_schedule()
+            except:
+                pass
+
         # and add them to the data for those platforms
         s_stats['trains'] = train_times['S']
         red_stats['trains'] = train_times['1-2-3']
