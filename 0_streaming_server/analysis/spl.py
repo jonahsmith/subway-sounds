@@ -17,7 +17,10 @@ def plot_data(y, factor=4, interpolate=True):
 	Plot the data using the matplotlib library.
 
 	Arguments:
-	interpolate : Wheter we so
+	interpolate : Wheter we do linear and cubic interpolation to see more refined trends in data
+	factor : the interpolation factor. This is basically the number of points we would add between two samples
+			 to smooth things out. Higher is better, but computationally more intense. Practically, a value
+			 between 3-5 should be fine.
 	'''
 	x = range(len(y))
 	print x,y
@@ -42,7 +45,7 @@ def plot_data(y, factor=4, interpolate=True):
 	return None
 
 
-def rms_flat(a):  # from matplotlib.mlab
+def rms_flat(a):
     """
     Return the root mean square of all the elements of *a*, flattened out.
     """
