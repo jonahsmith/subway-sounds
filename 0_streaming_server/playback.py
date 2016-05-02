@@ -24,7 +24,7 @@ while 1:
     if index >= total:
         index = 0
     data = {}
-    data['time'] = index*time_per_chunk
+    data['time'] = int(time.time())
     data['readings'] = {}
     data['readings']['street'] = weekday_day1[index]
     data['readings']['s'] = concourse_2_60[index]

@@ -38,7 +38,7 @@ def plot_data(y, factor=4, interpolate=True):
 		plt.plot(x, y, 'o')
 	plt.xlabel('Time')
 	plt.ylabel('Sound Level')
-	plt.show()	
+	plt.show()
 	return None
 
 
@@ -57,7 +57,7 @@ def getdecibels(filename, chunks=None, chunk_factor=1):
 	Arguments :
 	chunks: default None. The number of chunks to divide the audio file into.
 
-	chunk_factor : If chunks is not provided, we split the audio files according to the 
+	chunk_factor : If chunks is not provided, we split the audio files according to the
 					chunk_factor. This essentially refers to number of chunks per minute.
 					If the total duration is less than a minute, we will take 2 chunks.
 	'''
@@ -80,7 +80,7 @@ def getdecibels(filename, chunks=None, chunk_factor=1):
 	chunks = np.array_split(wavdata, chunks)
 
 	# clear out about a gig of data. This simple line saved a ton of trouble while dealing with large files.
-	wavdata = 0 
+	wavdata = 0
 
 	#dB SPL is basically dB = 20 * log10(amplitude)
 	dbs = []
@@ -101,6 +101,7 @@ if __name__ == '__main__':
 	path = '/Users/sag47/Downloads/snippets/5yards.wav'
 
 
-	dbs,dbs_a = getdecibels(path, chunk_factor=60)
-	data = {'path':path, "Original":dbs,"A-weighted":dbs_a}
-	json.dump(data,open(path+'.json','w'))
+	dbs, dbs_a = getdecibels(path, chunk_factor=60)
+	data = {'path': path, "Original":dbs, "A-weighted": dbs_a}
+	with open(path+'.json','w') as outfile:
+		json.dump(data, outfile)

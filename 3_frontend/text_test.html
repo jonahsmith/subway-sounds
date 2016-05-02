@@ -22,8 +22,10 @@
 
 <script>
 
-function swapText(id, replacementText) {
-  $(id).fadeOut(function() { $(id).text(replacementText).fadeIn() })
+function updateText(id, replacementText) {
+  if ($(id).text() != replacementText){
+    $(id).fadeOut(function() { $(id).text(replacementText).fadeIn() })
+  }
 }
 
 
