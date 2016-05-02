@@ -1,3 +1,13 @@
+"""
+playback.py
+
+Take data from the pre-made JSON files and serve it as a real time data.
+
+We do this by iterating through the data in an infinite loop, and printing out
+a JSON dump onto the stdout for some other process to consume. If we reach the
+end of the list, we just start from the beginning.
+"""
+
 import time
 from sys import stdout, exit, argv
 import json
@@ -24,6 +34,7 @@ for f in ['1_street.WAV.json', '2_concourse.WAV.json', '3_1-2-3.WAV.json', '4_7.
 
 total = len(static_data[min(static_data, key=lambda k: len(static_data[k]))]['A-weighted'])
 index = 0
+
 while 1:
     if index >= total:
         index = 0

@@ -24,10 +24,14 @@ import numpy as np
 print '\n'.join(files)
 dbs = []
 for f in files:
+
+	#getdecibels send out the normal as well as A weighted version of the decibel reading
+	# We use the A weighted one
 	db,dba = getdecibels(f, chunks=1)
 	dbs.append(dba)
 
 
+# Linear Regression to figure out the sound at the nozzle.
 X = np.array(x)
 X = X.reshape(6,1)
 Y = np.array(dbs)
@@ -36,13 +40,14 @@ regr = linear_model.LinearRegression()
 regr.fit(X, Y)
 print 
 print('Coefficients: \n', regr.coef_)
+print "at zero distance :",regr.predict([0])
 
+
+# Plot the original data along with the regression line
 plt.scatter(X, Y,  color='black')
 plt.plot(X, regr.predict(X), color='blue',
          linewidth=3)
 
-
-print "at zero distance :",regr.predict([0])
 print 
 plt.show()
 # plot_data(dbs, factor=5, interpolate=False)
