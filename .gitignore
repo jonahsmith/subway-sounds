@@ -67,3 +67,7 @@ virenv/
 
 # Redis dumps
 *.rdb
+
+# WAV files
+*.wav
+*.WAV
