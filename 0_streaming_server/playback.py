@@ -16,6 +16,18 @@ import os
 
 time_per_chunk = 1
 
+
+def calibrate(value, calibration_constant = -6, round_off=2):
+    """
+    Calibration function.
+
+    Takes in a single value and return a calibrated value.
+
+    In our case, we subtract 6 from the reading and round off to the neareset 2nd digit
+    """
+    return round(float(value) - calibration_constant,round_off)
+
+# The argument to the python file is the day for which we wish to render out the redings
 try:
     if argv[1] not in ('day1', 'day2'):
         print('Specify either "day1" or "day2"')
@@ -27,17 +39,21 @@ except IndexError:
 
 basepath = os.path.join('analysis', day, 'processed-data/')
 
+
+
+# Open the files and store the JSON data in a variable called static_data
 static_data = {}
 for f in ['1_street.WAV.json', '2_concourse.WAV.json', '3_1-2-3.WAV.json', '4_7.WAV.json']:
     with open(os.path.join(basepath, f)) as datafile:
         static_data[f] = json.load(datafile)
 
+#find the smallest run length we have
 total = len(static_data[min(static_data, key=lambda k: len(static_data[k]))]['A-weighted'])
+
+
+
+# start with the first reading
 index = 0
-
-
-def calibrate(value, calibration_constant = -6):
-    return round(float(value) - 6,2)
 
 while 1:
     if index >= total:
