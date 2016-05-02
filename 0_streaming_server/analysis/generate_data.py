@@ -4,7 +4,7 @@ import os
 import json
 
 try:
-    directory = argv[2]
+    directory = argv[1]
 except IndexError:
     print('No data directory given.')
     exit(1)
