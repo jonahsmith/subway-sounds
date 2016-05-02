@@ -21,6 +21,59 @@ The Python dependencies are listed in `requirements.txt`. You can install them i
 pip install -r requirements.txt
 ```
 
+## Folder Structure
+```
+├── 0_streaming_server
+│   ├── analysis
+│   │   ├── A_weighting.py
+│   │   ├── calibration.py
+│   │   ├── day1
+│   │   │   └── processed-data
+│   │   │       ├── 1_street.WAV.json
+│   │   │       ├── 2_concourse.WAV.json
+│   │   │       ├── 3_1-2-3.WAV.json
+│   │   │       └── 4_7.WAV.json
+│   │   ├── day2
+│   │   │   └── processed-data
+│   │   │       ├── 1_street.WAV.json
+│   │   │       ├── 2_concourse.WAV.json
+│   │   │       ├── 3_1-2-3.WAV.json
+│   │   │       └── 4_7.WAV.json
+│   │   ├── generate_data.py
+│   │   ├── spl.py
+│   │   └── wavio.py
+│   ├── graphs
+│   │   ├── recalibration\ with\ A-Weights.png
+│   │   ├── x.png
+│   │   ├── y.png
+│   │   └── z.png
+│   ├── playback.py
+│   └── server.py
+├── 1_ingestor
+│   ├── ingest.py
+│   └── store.py
+├── 2_view_server
+│   ├── trains.py
+│   └── viewserver.py
+├── 3_frontend
+│   ├── chart-test.html
+│   ├── css
+│   │   └── main.css
+│   ├── index.html
+│   ├── js
+│   │   ├── chart-maker.js
+│   │   ├── highcharts.js
+│   │   ├── jquery-1.9.1.min.js
+│   │   ├── main.js
+│   │   └── update.js
+│   ├── media
+│   │   ├── 123.mp4
+│   │   └── surface.mp4
+│   ├── run_server
+│   └── text_test.html
+├── README.md
+└── requirements.txt
+```
 ## System structure
 
 Here is a sketch of the system's structure:
