@@ -76,6 +76,6 @@ while 1:
     index +=1
 
 
-    # Sleep for the duration of a chunk. This will then simulate a real data stream.
+    # Sleep for the duration of a chunk. This will then simulate a real data stream.gs
     time.sleep(time_per_chunk)
     stdout.flush()
