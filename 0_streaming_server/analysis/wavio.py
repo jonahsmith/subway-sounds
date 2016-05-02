@@ -1,10 +1,11 @@
+# NOTE : This version of wavio is incompatible with the original wavio module
+
 # wavio.py
 # Author: Warren Weckesser
 # License: BSD 3-Clause (http://opensource.org/licenses/BSD-3-Clause)
 # modified by Nikhil Mitra (License intact)
 
 
-# NOTE : This version of wavio is incompatible with the original wavio module
 import wave
 import numpy as np
 
