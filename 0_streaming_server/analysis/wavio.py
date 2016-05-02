@@ -19,7 +19,6 @@ def _wav2array(nchannels, sampwidth, data):
         raise ValueError("sampwidth must not be greater than 4.")
 
     if sampwidth == 3:
-        print "samp3"
         a = np.empty((num_samples, nchannels, 4), dtype=np.uint8)
         raw_bytes = np.fromstring(data, dtype=np.uint8)
         a[:, :, :sampwidth] = raw_bytes.reshape(-1, nchannels, sampwidth)
@@ -48,7 +47,6 @@ def readwav(file):
     data = wav.readframes(nframes)
     wav.close()
     duration = nframes / float(rate)
-    print file,":",duration,"seconds"
     array = _wav2array(nchannels, sampwidth, data)
     return duration, rate, sampwidth, array
 
