@@ -1,24 +1,28 @@
 import time
-from sys import stdout
+from sys import stdout, exit, argv
 import json
-# from random import random
 import time
-from data import concourse_2_60, train_1_2_3_day_1_60, train_1_2_3_day_2_60, weekday_day1
+import os
 
-chunks_per_minute = 60
+time_per_chunk = 1
 
+try:
+    if argv[1] not in ('day1', 'day2'):
+        print('Specify either "day1" or "day2"')
+        exit(1)
+    else:
+        day = argv[1]
+except IndexError:
+    day = 'day1'
 
+basepath = os.path.join('analysis', day, 'processed-data/')
 
+static_data = {}
+for f in ['1_street.WAV.json', '2_concourse.WAV.json', '3_1-2-3.WAV.json', '4_7.WAV.json']:
+    with open(os.path.join(basepath, f)) as datafile:
+        static_data[f] = json.load(datafile)
 
-time_per_chunk = 60/chunks_per_minute
-
-
-
-total = min(len(concourse_2_60),len(train_1_2_3_day_1_60),len(train_1_2_3_day_2_60),len(weekday_day1))
-
-
-print total
-
+total = len(static_data[min(static_data, key=lambda k: len(static_data[k]))]['A-weighted'])
 index = 0
 while 1:
     if index >= total:
@@ -26,13 +30,12 @@ while 1:
     data = {}
     data['time'] = int(time.time())
     data['readings'] = {}
-    data['readings']['street'] = weekday_day1[index]
-    data['readings']['s'] = concourse_2_60[index]
-    data['readings']['1-2-3'] = train_1_2_3_day_1_60[index]
-    data['readings']['7'] = train_1_2_3_day_2_60[index]
+    data['readings']['street'] = static_data['1_street.WAV.json']['A-weighted'][index]
+    data['readings']['s'] = static_data['2_concourse.WAV.json']['A-weighted'][index]
+    data['readings']['1-2-3'] = static_data['3_1-2-3.WAV.json']['A-weighted'][index]
+    data['readings']['7'] = static_data['4_7.WAV.json']['A-weighted'][index]
     print(json.dumps(data))
 
     index +=1
     time.sleep(time_per_chunk)
     stdout.flush()
-    # time.sleep(2)
