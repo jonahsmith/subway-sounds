@@ -81,7 +81,7 @@ pip install -r requirements.txt
 
 Here is a sketch of the system's structure:
 
-(insert photo from presentation)
+
 
 ## To Run
 
@@ -90,15 +90,15 @@ Here is a sketch of the system's structure:
 To start the simulated MTA stream of sound intensities, use the following command.
 
 ```
-python 0_streaming_server/playback.py | python 0_streaming_server/server.py
+cd 0_streaming_server && python playback.py | python server.py
 ```
 
 ### Start the ingestor
 
-**Note**: before you start the ingestor, make sure you have started the Redis server and that it is serving over the default port.
+**Note**: before you start the ingestor, make sure you have started the Redis server and that it is serving over the default port. The below commands must be run from the root directory. 
 
 ```
-python 1_ingestor/ingest.py | python 1_ingestor/store.py
+cd 1_ingestor && python ingest.py | python store.py
 ```
 
 ### Start the view server
