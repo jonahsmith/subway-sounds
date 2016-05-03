@@ -81,6 +81,7 @@ pip install -r requirements.txt
 
 Here is a sketch of the system's structure:
 
+![architecture](architecture.png)
 
 
 ## To Run
