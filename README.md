@@ -86,6 +86,16 @@ Here is a sketch of the system's structure:
 
 ## To Run
 
+### Run the static data files generator
+```
+Download files from: https://drive.google.com/a/columbia.edu/folderview?id=0ByTEfsZoEb1-YkdzNm5OaDB3cnc&usp=sharing
+```
+From the root directory: 
+```
+cd 0_streaming_server/analysis && python get_data.py // to get the static data files 
+python calibration.py // to get the calibrated data
+```
+
 ### Start the backend
 
 To start the simulated MTA stream of sound intensities, use the following command.
