@@ -87,16 +87,22 @@ Here is a sketch of the system's structure:
 ## To Run
 
 ### Run the static data files generator
+
+**This is strictly optional. The static data are already this repository in the location. This is to be used if you have want the full experience.**
+
 ```
 Download files from: https://drive.google.com/a/columbia.edu/folderview?id=0ByTEfsZoEb1-YkdzNm5OaDB3cnc&usp=sharing
 ```
+
 From the root directory: 
 ```
 // to get the static data files 
-cd 0_streaming_server/analysis && python get_data.py 
+cd 0_streaming_server/analysis && python get_data.py {{dirname}}
 // to get the calibrated data
-cd 0_streaming_server/analysis && python calibration.py 
+cd 0_streaming_server/analysis && python calibration.py
 ```
+
+where `{{dirname}}` is the directory of audio files you would like to process into static datasets.
 
 ### Start the backend
 
