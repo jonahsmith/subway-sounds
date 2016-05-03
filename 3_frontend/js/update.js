@@ -8,9 +8,9 @@ $( document ).ready(function() {
     if (h > 21 && h < 0){
       $('#0-1').text("Throngs of people mill around the entrance – or exit – to the subway station, taking in the bright, symbolic lights of Times Square. The characters that previously graced the streets and posed for photographs – be it the superheroes or Disney characters – have retired for the day, but in the city that never sleeps, this is but a small setback in the ‘party station.’");
     } else if (h >= 0 && h < 10) {
-      $('#0-1').text('0-1', "The crowds have died down compared to a few hours ago, but the bright, symbolic lights shone on outside the station. Mostly deserted at this hour, it is hard to imagine how this entire scene will transform into the hub of activity and energy in just a few hours. It is, after all, the ‘party station.’");
+      $('#0-1').text('0-1', "The crowds have died down, but Times Square’s bright lights shine on. The station is mostly deserted at this hour, but in a few hours, it will transform into a chaotic hub of activity — it is, after all, the “party station.”");
     } else if (h >= 10 && h <= 21){
-      $('#0-1').text("Throngs of people mill around the entrance – or exit – to the subway station, some rummaging in their bags looking for their Metro cards while others brush past them with a sense of purpose and direction. Just outside, a myriad of characters amble down the streets, from the controversial desnudas to the beloved Cookie Monster. Awestruck tourists cannot stop taking photographs or talking animatedly amongst themselves. The locals go about their business in a brusque manner, resigned to the ‘party station’ that is Times Square.");
+      $('#0-1').text("Throngs of people mill around the station entrance, some rummaging in their bags for their MetroCards while others go about their business with practiced ease. Some swipe too slowly. Some will have to swipe again at this turnstile. Just outside, a motley assortment of costumed characters amble down the streets, providing even more spectacle for awestruck tourists as locals shove past, resigned to the “party station” that is Times Square.");
     }
   }
 
@@ -38,7 +38,42 @@ $( document ).ready(function() {
   }
 
   function comparison(level){
-    return 'hatchet';
+    if (level > 145) {
+      return 'the thumping of a boom car';
+    } else if (level > 140) {
+      return 'the roar of a jet engine nearby'
+    } else if (level > 130) {
+      return 'the roar of a jet taking off 100-200 feet away';
+    } else if (level > 120) {
+      return 'the earth-shaking rumble of a thunderclap';
+    } else if (level > 110) {
+      return 'the smacking of a jackhammer';
+    } else if (level > 105) {
+      return 'the revving of a snowmobile';
+    } else if (level > 103) {
+      return 'the rumble of a jet flying 1000 feet overhead';
+    } else if (level > 100) {
+      return 'the grinding of a cement mixer';
+    } else if (level > 97) {
+      return 'the whirring of a newspaper press';
+    } else if (level > 88) {
+      return 'the revving of a motorcycle';
+    } else if (level > 84) {
+      return 'the whining of a diesel truck';
+    } else if (level > 80) {
+      return 'a whirring of a garbage disposal';
+    } else if (level > 78) {
+      return 'the swishing of a washing machine'
+    } else if (level > 70) {
+      return 'the whoosing of a vacuum cleaner';
+    } else if (level > 60) {
+      return 'the chitter-chatter of a normal conversation';
+    } else if (level > 50) {
+      return 'the awkwardness of a quiet office';
+    } else {
+      return 'the silence of something very quiet';
+    }
+
   }
 
   function clockTime(timestamp){
@@ -50,11 +85,7 @@ $( document ).ready(function() {
     var readings = newData['surface'];
     // updateChart(surface_chart, readings['current']['time'], readings['current']['value']);
 
-    if (readings['yest_trough']['value'] != 999) {
-      var yesterday = true;
-    } else {
-      var yesterday = false;
-    }
+    var yesterday = (readings['yest_trough']['value'] != 999) ? true : false;
 
     if (Math.abs(readings['current']['value'] - readings['today_peak']['value']) < 2) {
         $('#0-2').text("The sound levels are at " + readings['current']['value'] + " dB, which is close to the peak for today.");
@@ -98,7 +129,7 @@ $( document ).ready(function() {
       } else {
         var louder_quieter = 'louder';
       }
-      $('#0-2').text("The sound levels are at " + readings['current']['value'] + " dB, but this is " + louder_quieter + " than today’s peak of " + readings['today_peak']['value'] + " dB. Earlier, it would’ve seemed like " + comparison(readings['today_peak']['value']) + ". Now, it’s more like " + comparison(readings['current']['value']) + ".");
+      $('#0-2').text("The sound levels are at " + readings['current']['value'] + " dB, but this is " + louder_quieter + " than today’s peak of " + readings['today_peak']['value'] + " dB. At the peak, it would’ve seemed like " + comparison(readings['today_peak']['value']) + ". Now, it’s more like " + comparison(readings['current']['value']) + ".");
     }
   }
 
@@ -112,7 +143,7 @@ $( document ).ready(function() {
     var hour = new Date().toLocaleString('en-EN', {hour: '2-digit', hour12: false, timeZone: 'America/New_York'});
 
     if (hour < 6) {
-      $('#1-1').text("It’s normally quiet here this time of the day. The Shuttle (S) train is no longer in service until the clock hits 6:00 am. (Music?) But, during the day, the milieu is completely different.");
+      $('#1-1').text("It’s normally quiet here this time of the day. The Shuttle (S) train is not in service until the clock hits 6:00 am. But, during the day, the milieu is completely different.");
     } else {
       var timedif = readings['trains']['next_arrival'] - Date.now()/1000;
 
@@ -173,12 +204,12 @@ $( document ).ready(function() {
     // updateChart(red_chart, readings['current']['time'], readings['current']['value']);
     var louderQuieter = (readings['current']['value'] > newData['concourse']['current']['today']) ? 'louder' : 'quieter'
 
-    var diff = Math.abs((readings['current']['value'] - newData['concourse']['current']['value']));
+    var diff = Math.round(Math.abs((readings['current']['value'] - newData['concourse']['current']['value']))*10)/10;
     $('#2-1').text("Right now, the sound level is " + readings['current']['value'] + " dB. That's " + louderQuieter + " than the concourse level by " + diff + " decibels.");
 
     var comparison1 = comparison(readings['current']['value'])
     var comparison2 = comparison(newData['concourse']['current']['value']);
-    if (comparison != comparison2) {
+    if (comparison1 != comparison2) {
       $('#2-1').append(" Being down here is like " + comparison1 + "; just twenty feet higher, it's like " + comparison2 + ".");
     }
 
@@ -207,12 +238,12 @@ $( document ).ready(function() {
     }
 
 
-    var purpleDiff = readings['current_peak']['value'] - readings['current_trough']['value'];
+    var purpleDiff = Math.round((readings['current_peak']['value'] - readings['current_trough']['value'])*10)/10;
     $('#3-2').text("In a subway system with a plethora of different sources of noise, this is a cause for concern. Over the last five minutes, the sound intensity has varied by " + purpleDiff + " decibels.")
 
-    var streetDiff = newData['surface']['current_peak']['value'] - newData['surface']['current_trough']['value'];
-    var concourseDiff = newData['concourse']['current_peak']['value'] - newData['concourse']['current_trough']['value'];
-    var redDiff = newData['1-2-3']['current_peak']['value'] - newData['1-2-3']['current_trough']['value'];
+    var streetDiff = Math.round((newData['surface']['current_peak']['value'] - newData['surface']['current_trough']['value'])*10)/10;
+    var concourseDiff = Math.round((newData['concourse']['current_peak']['value'] - newData['concourse']['current_trough']['value'])*10)/10;
+    var redDiff = Math.round((newData['1-2-3']['current_peak']['value'] - newData['1-2-3']['current_trough']['value'])*10)/10;
 
     if (purpleDiff > Math.max(streetDiff, concourseDiff, redDiff)) {
       var level = '7 train';
