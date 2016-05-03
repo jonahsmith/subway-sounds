@@ -22,10 +22,10 @@ $( document ).ready(function() {
   initializeIntro();
 
   // Create the charts
-  // var surface_chart = createChart('surface-chart', 'surface level');
-  // var s_chart = createChart('s-chart', 'concourse level');
-  // var red_chart = createChart('red-chart', '1/2/3 track');
-  // var purple_chart = createChart('purple-chart', '7 track');
+  var surface_chart = createChart('surface-chart', 'surface level');
+  var s_chart = createChart('s-chart', 'concourse level');
+  var red_chart = createChart('red-chart', '1/2/3 track');
+  var purple_chart = createChart('purple-chart', '7 track');
 
   // Connect to the view server's websocket
   var socket = new WebSocket('ws://localhost:6999');
@@ -92,7 +92,7 @@ $( document ).ready(function() {
   // Function responsible for updating the 'surface' section
   function update_surface(newData) {
     var readings = newData['surface'];
-    // updateChart(surface_chart, readings['current']['time'], readings['current']['value']);
+    updateChart(surface_chart, readings['current']['time'], readings['current']['value']);
 
     // Check whether the yesterday readings are available (e.g. if we have been
     // ingesting for more than two calendar days.) If so, we can talk about
@@ -160,7 +160,7 @@ $( document ).ready(function() {
     // Decide whether we can talk about yesterday
     var yesterday = (readings['yest_trough']['value'] != 999) ? true : false;
 
-    // updateChart(s_chart, readings['current']['time'], readings['current']['value']);
+    updateChart(s_chart, readings['current']['time'], readings['current']['value']);
     var hour = new Date().toLocaleString('en-EN', {hour: '2-digit', hour12: false, timeZone: 'America/New_York'});
 
     // If it's before 6am, mention that the S train isn't running.
@@ -181,7 +181,11 @@ $( document ).ready(function() {
       // Sometimes the MTA feed is delayed and we get old arrivals. To
       // accomodate that, speak in past tense.
       if (timedif < 0) {
-        $('#1-1').text("The last S train arrived " + Math.round(Math.abs(timedif)) + " seconds ago.");
+        if (timedif <= -60) {
+          $('#1-1').text("The last S train arrived " + Math.round(Math.abs(timedif)/60) + " minutes ago.");
+        } else {
+          $('#1-1').text("The last S train arrived " + Math.round(Math.abs(timedif)) + " seconds ago.");
+        }
       } else if (timedif < 60) {
         $('#1-1').text("The next S train is set to arrive in about " + Math.round(timedif) + " seconds.");
       } else {
@@ -238,7 +242,7 @@ $( document ).ready(function() {
   // Function responsible for updating the '1-2-3' section
   function update_red(newData) {
     var readings = newData['1-2-3'];
-    // updateChart(red_chart, readings['current']['time'], readings['current']['value']);
+    updateChart(red_chart, readings['current']['time'], readings['current']['value']);
 
     // Check if this level is louder than the concourse, return string
     var louderQuieter = (readings['current']['value'] > newData['concourse']['current']['today']) ? 'louder' : 'quieter'
@@ -270,7 +274,7 @@ $( document ).ready(function() {
   // Function responsible for updating the '7' section
   function update_purple(newData) {
     var readings = newData['7'];
-    // updateChart(purple_chart, readings['current']['time'], readings['current']['value']);
+    updateChart(purple_chart, readings['current']['time'], readings['current']['value']);
 
     // Once again, check whether we have access to readings from yesterday
     var yesterday = (readings['yest_trough']['value'] != 999) ? true : false;
