@@ -34,7 +34,7 @@ def create_history(date):
 
 def make_reading(val):
     """Given a tuple, return a dictionary in the format of 'measurement' nodes."""
-    return {'time': val[0], 'value': val[1]}
+    return {'time': val[0], 'value': round(val[1], 2)}
 
 
 def get_values(database):
