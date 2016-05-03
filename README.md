@@ -53,6 +53,7 @@ pip install -r requirements.txt
 │   ├── ingest.py
 │   └── store.py
 ├── 2_view_server
+│   ├── 90
 │   ├── trains.py
 │   └── viewserver.py
 ├── 3_frontend
@@ -67,35 +68,56 @@ pip install -r requirements.txt
 │   │   ├── main.js
 │   │   └── update.js
 │   ├── media
-│   │   ├── 123.mp4
-│   │   └── surface.mp4
+│   │   └── cover.jpg
+│   ├── references.txt
 │   ├── run_server
-│   └── text_test.html
+│   └── thoughts.txt
 ├── README.md
 └── requirements.txt
+
+13 directories, 38 files
 ```
 ## System structure
 
 Here is a sketch of the system's structure:
 
-(insert photo from presentation)
+![architecture](architecture.png)
+
 
 ## To Run
+
+### Run the static data files generator
+
+**This is strictly optional. The static data are already this repository in the location. This is to be used if you have want the full experience.**
+
+```
+Download files from: https://drive.google.com/a/columbia.edu/folderview?id=0ByTEfsZoEb1-YkdzNm5OaDB3cnc&usp=sharing
+```
+
+From the root directory: 
+```
+// to get the static data files 
+cd 0_streaming_server/analysis && python get_data.py {{dirname}}
+// to get the calibrated data
+cd 0_streaming_server/analysis && python calibration.py
+```
+
+where `{{dirname}}` is the directory of audio files you would like to process into static datasets.
 
 ### Start the backend
 
 To start the simulated MTA stream of sound intensities, use the following command.
 
 ```
-python 0_streaming_server/playback.py | python 0_streaming_server/server.py
+cd 0_streaming_server && python playback.py | python server.py
 ```
 
 ### Start the ingestor
 
-**Note**: before you start the ingestor, make sure you have started the Redis server and that it is serving over the default port.
+**Note**: before you start the ingestor, make sure you have started the Redis server and that it is serving over the default port. The below commands must be run from the root directory. 
 
 ```
-python 1_ingestor/ingest.py | python 1_ingestor/store.py
+cd 1_ingestor && python ingest.py | python store.py
 ```
 
 ### Start the view server
