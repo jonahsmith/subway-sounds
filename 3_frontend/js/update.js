@@ -12,7 +12,7 @@ $( document ).ready(function() {
     if (h > 21 && h < 0){
       $('#0-1').text("Throngs of people mill around the entrance – or exit – to the subway station, taking in the bright, symbolic lights of Times Square. The characters that previously graced the streets and posed for photographs – be it the superheroes or Disney characters – have retired for the day, but in the city that never sleeps, this is but a small setback in the ‘party station.’");
     } else if (h >= 0 && h < 10) { // lede for middle of the night
-      $('#0-1').text('0-1', "The crowds have died down, but Times Square’s bright lights shine on. The station is mostly deserted at this hour, but in a few hours, it will transform into a chaotic hub of activity — it is, after all, the “party station.”");
+      $('#0-1').text("The crowds have died down, but Times Square’s bright lights shine on. The station is mostly deserted at this hour, but in a few hours, it will transform into a chaotic hub of activity — it is, after all, the “party station.”");
     } else if (h >= 10 && h <= 21){ // lede for the middle of the day
       $('#0-1').text("Throngs of people mill around the station entrance, some rummaging in their bags for their MetroCards while others go about their business with practiced ease. Some swipe too slowly. Some will have to swipe again at this turnstile. Just outside, a motley assortment of costumed characters amble down the streets, providing even more spectacle for awestruck tourists as locals shove past, resigned to the “party station” that is Times Square.");
     }
