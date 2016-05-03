@@ -22,7 +22,7 @@ pip install -r requirements.txt
 ```
 
 ## Folder Structure
-
+```
 ├── 0_streaming_server
 │   ├── analysis
 │   │   ├── A_weighting.py
@@ -76,7 +76,7 @@ pip install -r requirements.txt
 └── requirements.txt
 
 13 directories, 38 files
-
+```
 ## System structure
 
 Here is a sketch of the system's structure:
