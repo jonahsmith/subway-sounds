@@ -22,7 +22,7 @@ pip install -r requirements.txt
 ```
 
 ## Folder Structure
-```
+
 ├── 0_streaming_server
 │   ├── analysis
 │   │   ├── A_weighting.py
@@ -53,6 +53,7 @@ pip install -r requirements.txt
 │   ├── ingest.py
 │   └── store.py
 ├── 2_view_server
+│   ├── 90
 │   ├── trains.py
 │   └── viewserver.py
 ├── 3_frontend
@@ -67,13 +68,15 @@ pip install -r requirements.txt
 │   │   ├── main.js
 │   │   └── update.js
 │   ├── media
-│   │   ├── 123.mp4
-│   │   └── surface.mp4
+│   │   └── cover.jpg
+│   ├── references.txt
 │   ├── run_server
-│   └── text_test.html
+│   └── thoughts.txt
 ├── README.md
 └── requirements.txt
-```
+
+13 directories, 38 files
+
 ## System structure
 
 Here is a sketch of the system's structure:
