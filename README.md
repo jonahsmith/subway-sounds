@@ -92,8 +92,10 @@ Download files from: https://drive.google.com/a/columbia.edu/folderview?id=0ByTE
 ```
 From the root directory: 
 ```
-cd 0_streaming_server/analysis && python get_data.py // to get the static data files 
-python calibration.py // to get the calibrated data
+// to get the static data files 
+cd 0_streaming_server/analysis && python get_data.py 
+// to get the calibrated data
+cd 0_streaming_server/analysis && python calibration.py 
 ```
 
 ### Start the backend
