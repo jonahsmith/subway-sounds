@@ -11,6 +11,7 @@ import redis
 import json
 import time
 from datetime import datetime, timedelta, date
+from pytz import timezone
 from sys import stdout
 # This is our module, also in this directory, that returns the next arrival and
 # departure for a particular platform.
@@ -21,6 +22,10 @@ import trains
 # between updates. (In concrete terms, this will specify how often the data on
 # the client's page updates.)
 PAUSE = 5
+
+# The Python Timezone (pytz) we want to use. All times should be 'America/New_York' or
+# 'US/Eastern'.
+EST_TIMEZONE = timezone('US/Eastern')
 
 def create_history(date):
     """A factory function for historical data containers"""
@@ -50,6 +55,17 @@ def get_values(database):
     key_val = [(int(key), float(val)) for key, val in zip(keys, values) if val]
     return key_val
 
+def get_time_data():
+    now_est = datetime.now(EST_TIMEZONE)
+    data = {
+        "current_hour": now_est.hour,
+        "current_minute": now_est.minute,
+        "current_second": now_est.second, 
+        "current_month": now_est.month,
+        "current_year": now_est.year,
+        "current_day": now_est.day,
+    }
+    return data
 
 def get_stats(level_name, values):
     """Calculate the min/max over three time scales: Redis TTL, today, yesterday"""
@@ -118,6 +134,7 @@ def send():
         s_stats = get_stats('s', get_values(s))
         red_stats = get_stats('red', get_values(red))
         purple_stats = get_stats('purple', get_values(purple))
+        date_data = get_time_data()
 
         # Get the next arriving and departing trains using our library. Google's
         # code inexplicably breaks in spectacular fashion every once in a while,
@@ -138,7 +155,8 @@ def send():
                     'surface': street_stats,
                     'concourse': s_stats,
                     '1-2-3': red_stats,
-                    '7': purple_stats
+                    '7': purple_stats,
+                    'date': date_data
                   }
         # Print it to stdout
         print(json.dumps(payload))

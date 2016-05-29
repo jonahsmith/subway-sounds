@@ -14,7 +14,7 @@ $( document ).ready(function() {
     } else if (h >= 0 && h < 10) { // lede for middle of the night
       $('#0-1').text("The crowds have died down, but Times Square’s bright lights shine on. The station is mostly deserted at this hour, but in a few hours, it will transform into a chaotic hub of activity — it is, after all, the “party station.”");
     } else if (h >= 10 && h <= 21){ // lede for the middle of the day
-      $('#0-1').text("Throngs of people mill around the station entrance, some rummaging in their bags for their MetroCards while others go about their business with practiced ease. Some swipe too slowly. Some will have to swipe again at this turnstile. Just outside, a motley assortment of costumed characters amble down the streets, providing even more spectacle for awestruck tourists as locals shove past, resigned to the “party station” that is Times Square.");
+      $('#0-1').text("Throngs of people mill around the station entrance, some rummaging in their bags for their MetroCards while others go about their business with practiced ease. Some swipe their MetroCards too slowly and some too fast. Some will have to swipe again at this turnstile. Just outside, a motley assortment of costumed characters amble down the streets, providing even more spectacle for awestruck tourists as locals shove past, resigned to the “party station” that is Times Square.");
     }
   }
 
@@ -131,11 +131,9 @@ $( document ).ready(function() {
     } else if (Math.abs(readings['current']['value'] - readings['today_trough']['value']) < 2) {
         $('#0-2').text("The sound levels are at " + readings['current']['value']+ " dB, which is close to the quietest it has been today.");
 
-        var d = new Date();
-        // just return the current hour in EST
-        var hour = d.toLocaleString('en-EN', {hour: '2-digit', hour12: false, timeZone: 'America/New_York'});
+        var hour = newData['date']['current_hour']
         if (hour <= 8) {
-          $('#0-2').append(" This isn’t surprising; it's only " + clockTime(d) + " in New York City. As rush hour starts, the noise levels will inevitably go up.");
+          $('#0-2').append(" This isn’t surprising; it's only " + newData['date']['hour'] + ":" + newData['date']['minute'] + " in New York City. As rush hour starts, the noise levels will inevitably go up.");
         } else {
           if (yesterday) {
             $('#0-2').append(" Yesterday, the station was at its most tranquil at " + clockTime(readings['yest_trough']['time']*1000) + ". The sound intensities are expected to kick up a notch though.");
@@ -161,7 +159,7 @@ $( document ).ready(function() {
     var yesterday = (readings['yest_trough']['value'] != 999) ? true : false;
 
     updateChart(s_chart, readings['current']['time'], readings['current']['value']);
-    var hour = new Date().toLocaleString('en-EN', {hour: '2-digit', hour12: false, timeZone: 'America/New_York'});
+    var hour = newData['date']['current_hour']
 
     // If it's before 6am, mention that the S train isn't running.
     if (hour < 6) {
@@ -181,13 +179,30 @@ $( document ).ready(function() {
       // Sometimes the MTA feed is delayed and we get old arrivals. To
       // accomodate that, speak in past tense.
       if (timedif < 0) {
-        if (timedif <= -60) {
+        if (timedif == -60) {
+          $('#1-1').text("The last S train arrived a minute ago.");
+        } else if ((timedif < -60) && (timedif > -60*60)) {
           $('#1-1').text("The last S train arrived " + Math.round(Math.abs(timedif)/60) + " minutes ago.");
+        } else if (timedif <= -60*60) {
+          var roundedtime = Math.round(Math.abs(timedif)/(60*60))
+          if (roundedtime == 1) {
+            $('#1-1').text("The last S train arrived approximately an hour ago.");
+          } else {
+            $('#1-1').text("The last S train arrived " + roundedtime + " hours ago.");
+          }
         } else {
           $('#1-1').text("The last S train arrived " + Math.round(Math.abs(timedif)) + " seconds ago.");
         }
+      } else if (timedif == 0) {
+        $('#1-1').text("An S train has just pulled into the station.");
       } else if (timedif < 60) {
         $('#1-1').text("The next S train is set to arrive in about " + Math.round(timedif) + " seconds.");
+      } else if (timedif == 60) {
+        $('#1-1').text("The next S train is set to arrive in about a minute.");
+      } else if (timedif == 60*60) {
+        $('#1-1').text("The next S train is set to arrive in about one hour.");
+      } else if (timedif > 60*60) {
+        $('#1-1').text("The next S train is set to arrive in about " + Math.round(timedif/(60*60)) + " hours.");
       } else {
         $('#1-1').text("The next S train is set to arrive in about " + Math.round(timedif/60) + " minutes.");
       }
