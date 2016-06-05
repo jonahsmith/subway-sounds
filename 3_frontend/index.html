@@ -1,347 +1,372 @@
-<script src='js/jquery-1.9.1.min.js'></script>
-<script src='js/update.js'></script>
-<script src='js/highcharts.js'></script>
-<script src='js/chart-maker.js'></script>
-
-<head>
-  <title>Subway Sounds</title>
-  <meta charset="UTF-8">
-</head>
-
-<body>
-<style>
-  body {
-    font-family: system, -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Lucida Grande";
-    padding-top: 20px;
-  }
-
-  #story {
-    width: 700px;
-    margin: 0 auto;
-    margin-top: 50px;
-    margin-bottom: 50px;
-  }
-
-  p {
-    font-size: 14px;
-    line-height: 1.58;
-  }
-
-  .chart {
-    float: right;
-    padding: 30px;
-    width: 400px;
-    height: 200px;
-  }
-
-  #footer {
-    border-top: 1px solid;
-    padding-top: 20px;
-    font-size: 12px;
-  }
-  #cover {
-    position: relative;
-    background-image: url('media/cover.jpg');
-    background-position:50% 50%;
-    background-size: cover;
-    width: 90%;
-    height: 90%;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  h1, h2 {
-    background-color: rgba(0,0,0,0.5);
-    position: absolute;
-    left: 0;
-    padding: 20px;
-  }
-
-  h1 {
-    color: #ebebeb;
-    top: 55%;
-    padding: 20px;
-    width: auto;
-  }
-
-  h2 {
-    color: #a6a6a6;
-    font-weight: 300;
-    top: 70%;
-    width: 70%;
-  }
-
-  #names {
-    color: #a3a3a3;
-    background-color: rgba(0,0,0,0.5);
-    position: absolute;
-    left: 0;
-    padding-left: 10px;
-    font-size: 12px;
-    bottom: 0;
-    padding-bottom: 10px;
-  }
-</style>
-
-<div id='cover'>
-
-  <h1>Subway Sounds</h1>
-
-  <h2>The subway is loud, and everyone knows it. But what does that mean for the
-  people who experience it every day?</h2>
-
-  <div id='names'>Priyanjana Bengani, Adnan Firoze, Nikhil Mitra, Jonah Smith and Cecilia Watt</div>
-
-</div>
-
-
-<div id='story'>
-
-
-<p>Some text in this story will update in real time.</p>
-
-<p>Subway Sounds is an experimental project to capture the ambience of the Times
-Square subway station in real time. Unlike past studies of sound intensity in
-subway stations, this project explores the sights, sounds, and voices of four
-levels of the station, from the surface down to the platforms, using streamed
-sound intensities from the busiest station in New York City.</p>
-
-<p>According to the Metropolitan Transportation Authority (MTA), the New York
-subway is the seventh largest system in the world, and Times Square served over
-65 million passengers in 2015. Audio sensors at the various levels of the
-station – the surface, the concourse, by the 1-2-3 trains and the 7 train –
-record the sound and stream it to our servers, and based on the information
-received, we construct a narrative.</p>
-
-<p>Due to logistical, technical and security challenges, we have been unable to
-deploy audio sensors in the station; as such, we have simulated an official
-stream using data we collected manually over 30-minute windows on two days in
-April. With access to a public MTA stream of readings from audio sensors
-throughout the system, or with permission to install our own, this experiment
-would provide an insight into the varying sounds of the Times Square subway
-station.</p>
-
-
-<h3>The Surface</h3>
-
-<p class='dyn-text' id='0-1'></p>
-
-<div id='surface-chart' class='chart'></div>
-
-<p>“Party station” is the term Gias Uddin uses for Times Square. A newsstand
-worker at the 116th Street subway station on the 1 line, Uddin passes through
-Times Square daily to get to work. “Sometimes I want to dance with all the music
-and commotion,” he says, “and sometimes I want to slap those musicians making
-noise.” He adds, “If you are happy, train noise is no problem; if you are
-unhappy, all noise is bad.”</p>
-
-<p>But at the surface level of Times Square station, it is not the train that
-causes all the noise. Sirens from police cars, ambulances and fire engines are
-far more common. And, like the trains, they’re not a consistent source of noise,
-but transient. The reaction these wails get are unsurprising: winces, fingers in
-ears and clenched eyes – just in case that helps drown out the noise.</p>
-
-<p id='0-2' class='dyn-text'></p>
-
-<p>The sound levels here can get loud, but other stations, despite not even
-being half as busy, are often worse off. Take, for example, the elevated 125th
-Street station on the 1 line, which had an annual ridership of 2.5 million to
-Times Square’s 65 million. Half a block down, Leyla and Mario Gomez run Thrifty
-Deli, situated alongside a stretch of elevated tracks. They say the vibrations
-from overhead trains have caused cans to fall off the shelves in their basement
-storage unit. More ominously, though, as Leyla Gomez says, “Muggers smoke joints
-and rob people under the sky rail. And when there is noise like that at night,
-no one will hear you scream.” Times Square, on the other hand, is set to <a
-target='_blank'
-href="http://www.nytimes.com/2016/02/18/nyregion/times-square-police-substation-is-set-to-be-overhauled.html?_r=0">lose
-its police building</a> as crime in the area <a target='_blank'
-href="http://nymag.com/daily/intelligencer/2016/02/times-square-police-station-to-get-a-makeover.html">has
-plummeted</a>.</p>
-
-
-<h3>The Concourse</h3>
-
-<p>A slew of sounds blend together in the concourse, twenty feet below the
-surface. The Shuttle (S) train, which has one job – transporting people from
-Grand Central and back – stops at this level.</p>
-
-<p class='dyn-text' id='1-1'></p>
-
-<div id='s-chart' class='chart'></div>
-
-<p>The Upper Mezzanine in Times Square is a coveted spot for musicians. The
-space opposite where the S train stops is one of three spots in Times Square
-station for which musicians have to audition. In total, there are thirty such
-MUSIC sites around the city that are part of <a target='_blank' href="http://web.mta.info/mta/aft/muny/locations.html">MTA’s Art and Design Program</a>.
-Musicians play a range of instruments including Andean pipes, Korean drums,
-steel drums, Cajun cellos and Flamenco guitars while their songs span many
-genres.</p>
-
-<p>This musical mélange is the primary cause of the concourse cacophony. In its
-absence, this level is almost quiet.</p>
-
-<p class='dyn-text' id='1-2'></p>
-
-<p>There are regulations that the <a target='_blank' href="https://www.osha.gov/pls/oshaweb/owadisp.show_document?p_table=STANDARDS&p_id=9735">Occupational Health and Safety Administration</a>
-(OSHA) have in place to protect employees from excessive exposure to high noise
-levels. For an eight-hour workday, noise exposure above 90 decibels is deemed
-excessive. For every five decibel increase in the noise levels, this duration
-goes down by half.</p>
-
-<p class='dyn-text' id='1-3'></p>
-
-<p>Two transit police officers, Bae and Sandhu, stationed on this level say they
-are not allowed to use hearing protection because they have to be constantly
-vigilant. Bae taps the radio attached to his shoulder. “What if there’s a
-message from Central? What if there’s an emergency?” he asks. These aren’t
-far-off questions. On the back of terrorist attacks in European cities, even if
-there are no known immediate, specific threats to the United States, security
-measures <a target='_blank'
-href="https://www.dhs.gov/news/2016/03/22/statement-secretary-jeh-c-johnson-attacks-today-brussels-belgium">are
-increased</a> at the major airports and transit stops in the country. As a
-result, even though Bae suffers from ringing in his left ear, he has to brook
-the sounds of the subway station for eight hours a day. He doesn’t know what
-causes the ringing, but he says it could be a result of his time in the Army or
-his time working in subway stations. Before Bae and Sandhu were assigned to the
-Times Square concourse in March 2016, the two officers were stationed in several
-different stations in Brooklyn.</p>
-
-<h3>The 1-2-3 Trains</h3>
-
-<p>The 1-2-3 trains run twenty feet below the Shuttle. Four tracks service these
-three lines, all of which stop here. This level can get loud, as multiple trains
-arrive and depart simultaneously, throughout the day and night.</p>
-
-<p class='dyn-text' id='2-1'></p>
-
-<div id='red-chart' class='chart'></div>
-
-<p class='dyn-text' id='2-2'></p>
-
-<p>It’s not just these fleeting spikes in sound intensity that have adverse
-effects on those who spend their working day in the underground station.</p>
-
-<p>Hasan Bachu runs a newsstand meters away, between the platforms for the 1-2-3
-trains and the platform for the 7 trains. For the past eight years, he’s
-occupied the same spot for eight hours a day, enduring the crowds and the
-clamor. “I cannot hear customers and customers cannot hear me,” he says. He
-insists that the loud music, a constant from between 3 and 7 PM most days, is
-more insufferable than the trains. “Those four hours,” he says, “I have a
-headache.” He also says customers are less likely to stop by at his shop during
-those hours.</p>
-
-<p>This is frustrating for Bachu and others vendors who work at the shops in the
-mezzanines. One of Bachu’s employees has experienced a constant ringing noise in
-his ear that led him to meet with an audiologist, though it’s not clear that the
-subway noise is the cause.</p>
-
-<p>Ramon Zabala, a guitarist who performs across from Bachu’s shop a few times a
-week, agrees with Bachu that the station is loud. While Bachu resents Zabala’s
-presence and the sounds coming from his amplifier, Zabala instead takes issue
-with the train noise, which often interferes with his playing. “Sometimes I
-cannot hear myself,” he says. He prefers quieter areas, but, not being part of
-the <a target='_blank'
-href='http://web.mta.info/mta/aft/muny/factsheet.html'>MTA Arts &amp; Design
-MUSIC program</a>, he doesn’t have a choice: in order to make money playing
-music, he travels from station to station, looking for any location where a
-rival musician hasn’t yet set up shop.</p>
-
-<p>Specific complaints may differ, but everyone agrees: subway stations are way
-too loud.</p>
-
-<p>Tony Evans, an acoustic consultant for ATS Consulting, says that transit
-systems aren't obligated to fix noise problems unless they exceed the FTA
-criteria and the repair would be cost effective. In his experience, he finds
-that the sound intensities are annoying but within the levels specified by the
-FTA, which provides little incentive for the MTA to address the issues and
-ameliorate the situation.</p>
-
-<p>But, since the mid-1970s, the MTA has included budget items to address the
-noise levels in the subway. During Michael Bloomberg’s term as Mayor, the City
-even implemented a noise code for transit operations, which required, among
-other things, minimizing curve and break screeches and limiting sound levels to
-80 decibels by 2012. The code also encouraged the MTA to “develop noise
-mitigation strategies and incorporate such plans into their capital planning
-goals.”</p>
-
-<p>According to MTA spokesperson Kevin Ortiz, the efforts to quiet track-related
-noise have included the installation of continuously welded rail and resilient
-rail fasteners, as well as track lubrication along sharp curves. The trains also
-use ring-damped wheels now, which reduce the noise. Composite brake shoes, which
-are meant to eliminate screeching stops, are used on all subway cars.</p>
-
-<p>Yet on the 1-2-3 platform, the trains screech while pulling in and
-departing.</p>
-
-<p>Ortiz also says that many subway stations have noise absorbing barriers, as
-well as acoustic materials above and below the platforms, which help create a
-quieter environment compared to two decades ago. But in the absence of
-historical data, it is hard to say how much progress has been made.</p>
-
-<h3>The 7 Train</h3>
-
-<p class='dyn-text' id='3-1'></p>
-
-<div id='purple-chart' class='chart'></div>
-
-<p>Eddie, an MTA cleaner who works at multiple subway stations including Times
-Square, has worn earplugs since he started working for the MTA nineteen years
-ago. He recognized then that his job would expose him to extended periods of
-loud noise that might damage his hearing, and he wanted to protect his hearing
-for one simple reason: “I just enjoy listening to music,” Eddie says. “I wanted
-to continue doing that.” Like the police officers, he is not allowed to wear
-earplugs, lest he miss an announcement over the PA system—only train conductors
-and operators, he says, are allowed to use hearing protection equipment — but so
-far, he has not been reprimanded. Like Bachu, it’s not the sound of the trains
-that bother him, but the musicians. “Especially those drummer boys,” he
-says.</p>
-
-<p>Dr. Marc B Kramer, an audiologist, treats hearing loss and advises the New
-York City Employee Retirement System (NYCERS). He says, “screeches are annoying,
-much like fingernails on blackboards, but that doesn’t mean they’re hazardous.”
-It boils down to how much exposure and for how long.</p>
-
-<p>Sudden variations in sounds can be jarring as well. According to James
-Cowen’s <i>The Effects of Sound on People</i>, stress reactions can be caused by “an
-individual’s sensitivity to different sources and types of noise.” Cowen goes on
-to say that low sound levels associated with any threatening source can result
-in a greater stress reaction than high levels associated with a non-threatening
-source or a source that individuals are acclimatised to. In the subway, the
-plethora of sounds can result in greater stress.</p>
-
-<p class='dyn-text' id='3-2'></p>
-
-<p>Dr. Frank Goldsmith is the Director of Occupational Health at Transport
-Workers Union (TWU) Local 100, which has over 40,000 members. He says that the
-MTA has a hearing protection program that identifies the job titles most at risk
-for compromised hearing, and coordinates annual hearing tests and provides basic
-hearing protection for workers in these positions. But Goldsmith argues this
-does not address the root of the problem: loud trains.</p>
-
-<p>Goldsmith also points out that workers can be wary of their jobs receiving
-extra scrutiny from the MTA, in case that scrutiny makes the MTA reconsider
-whether that job needs to exist in the first place. For the workers, it’s
-Catch-22 situation: if they don’t raise their concerns, they could suffer from
-hearing loss; if they do, they might lose their jobs. Even jobs covered by this
-hearing conservation program come with caveats. For example, according to
-Goldsmith, employees cannot file for compensation from New York State until they
-have been away from the job for at least six months.</p>
-
-<p>The New York City Subway is an old system, and its noise problem was
-recognized at least as early as 1930, when the Noise Abatement Commission
-attempted to record and study sounds from around the city. Nearly a century
-later, the subway has changed very little: the Second Avenue line is still under
-construction, and the trains are still too loud for comfort. Somehow, the city’s
-kaleidoscopic assortment of inhabitants have learned to tolerate New York’s less
-desirable features: the sweet aroma of sewage in the summertime, an underground
-empire of rats, the screeching clamor of the subway system. And other New
-Yorkers.</p>
-
-<div id='footer'>
-  Sound comparisons from the <a target='_blank' href="https://www.nidcd.nih.gov/health/i-love-what-i-hear-common-sounds">National Institutes of Health</a>.
-  Exposure levels from <a target='_blank' href="https://www.osha.gov/pls/oshaweb/owadisp.show_document?p_table=STANDARDS&p_id=9735">Occupational Safety and Health Administration</a>.
-</div>
-
-</div>
-
-</body>
+<html>
+    <script src='js/jquery-1.9.1.min.js'></script>
+    <script src='js/update.js'></script>
+    <script src='js/highcharts.js'></script>
+    <script src='js/chart-maker.js'></script>
+
+    <head>
+      <title>Subway Sounds</title>
+      <meta charset="UTF-8">
+    </head>
+
+    <body>
+    <style>
+      body {
+        font-family: system, -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Lucida Grande";
+        padding-top: 20px;
+      }
+
+      #story {
+        width: 700px;
+        margin: 0 auto;
+        margin-top: 50px;
+        margin-bottom: 50px;
+      }
+
+      #disclaimer, li {
+        font-size: 13px;
+        line-height: 1.30;
+        color: #656565;
+      }
+
+      p {
+        font-size: 14px;
+        line-height: 1.58;
+        color: #3F3F3F;
+      }
+
+      .chart {
+        float: right;
+        padding: 30px;
+        width: 400px;
+        height: 200px;
+      }
+
+      #footer {
+        border-top: 1px solid;
+        padding-top: 20px;
+        font-size: 12px;
+      }
+      #cover {
+        position: relative;
+        background-image: url('media/cover.jpg');
+        background-position:50% 50%;
+        background-size: cover;
+        width: 90%;
+        height: 90%;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      h1, h2 {
+        background-color: rgba(0,0,0,0.5);
+        position: absolute;
+        left: 0;
+        padding: 20px;
+      }
+
+      h1 {
+        color: #ebebeb;
+        top: 55%;
+        padding: 20px;
+        width: auto;
+      }
+
+      h2 {
+        color: #a6a6a6;
+        font-weight: 300;
+        top: 70%;
+        width: 70%;
+      }
+
+      #names {
+        color: #a3a3a3;
+        background-color: rgba(0,0,0,0.5);
+        position: absolute;
+        left: 0;
+        padding-left: 10px;
+        font-size: 12px;
+        bottom: 0;
+        padding-bottom: 10px;
+      }
+    </style>
+
+    <div id='cover'>
+
+      <h1>Subway Sounds</h1>
+
+      <h2>The subway is loud, and everyone knows it. But what does that mean for the
+      people who experience it every day?</h2>
+
+      <div id='names'>Priyanjana Bengani, Adnan Firoze, Nikhil Mitra, Jonah Smith and Cecilia Watt</div>
+
+    </div>
+
+
+    <div id='story'>
+
+
+    <p id="disclaimer">
+            This is an experimental project where some of the text updates in real time. Therefore, 
+            while reading this, some of the text will change before your eyes. 
+            Text updates rely on two feeds: 
+            <ul>
+            <li>the <a href="http://datamine.mta.info" target="_blank">MTA subway feed</a>, 
+            which provides arrival and departure times of the different subway lines in New 
+            York City.</li>
+            <li>data recorded by us at Times Square station in half-hour slots over two days 
+            that is replayed continuously. This data is pre-recorded, not live.</li>
+            </ul>
+            <p id="disclaimer">You can read more about our methodology here.</p>
+            <p id="disclaimer">We stumbled upon some interesting challenges – technological 
+            and journalistic – over the course of this project. You can read our retrospective 
+            here.</p>
+    </p>
+
+    <p>Unlike past studies of sound intensity in subway stations, this project explores the sights, sounds, 
+    and voices of four levels of the station, from the surface down to the platforms, using streamed
+    sound intensities from the busiest station in New York City.</p>
+
+    <p>According to the Metropolitan Transportation Authority (MTA), the New York
+    subway is the seventh largest system in the world, and Times Square served over
+    65 million passengers in 2015. Audio sensors at the various levels of the
+    station – the surface, the concourse, by the 1-2-3 trains and the 7 train –
+    record the sound and stream it to our servers, and based on the information
+    received, we construct a narrative.</p>
+
+    <p>Due to logistical, technical and security challenges, we have been unable to
+    deploy audio sensors in the station; as such, we have simulated an official
+    stream using data we collected manually over 30-minute windows on two days in
+    April. With access to a public MTA stream of readings from audio sensors
+    throughout the system, or with permission to install our own, this experiment
+    would provide an insight into the varying sounds of the Times Square subway
+    station.</p>
+
+
+    <h3>The Surface</h3>
+
+    <p class='dyn-text' id='0-1'></p>
+
+    <div id='surface-chart' class='chart'></div>
+
+    <p>“Party station” is the term Gias Uddin uses for Times Square. A newsstand
+    worker at the 116th Street subway station on the 1 line, Uddin passes through
+    Times Square daily to get to work. “Sometimes I want to dance with all the music
+    and commotion,” he says, “and sometimes I want to slap those musicians making
+    noise.” He adds, “If you are happy, train noise is no problem; if you are
+    unhappy, all noise is bad.”</p>
+
+    <p>But at the surface level of Times Square station, it is not the train that
+    causes all the noise. Sirens from police cars, ambulances and fire engines are
+    far more common. And, like the trains, they’re not a consistent source of noise,
+    but transient. The reaction these wails get are unsurprising: winces, fingers in
+    ears and clenched eyes – just in case that helps drown out the noise.</p>
+
+    <p id='0-2' class='dyn-text'></p>
+
+    <p>The sound levels here can get loud, but other stations, despite not even
+    being half as busy, are often worse off. Take, for example, the elevated 125th
+    Street station on the 1 line, which had an annual ridership of 2.5 million to
+    Times Square’s 65 million. Half a block down, Leyla and Mario Gomez run Thrifty
+    Deli, situated alongside a stretch of elevated tracks. They say the vibrations
+    from overhead trains have caused cans to fall off the shelves in their basement
+    storage unit. More ominously, though, as Leyla Gomez says, “Muggers smoke joints
+    and rob people under the sky rail. And when there is noise like that at night,
+    no one will hear you scream.” Times Square, on the other hand, is set to <a
+    target='_blank'
+    href="http://www.nytimes.com/2016/02/18/nyregion/times-square-police-substation-is-set-to-be-overhauled.html?_r=0">lose
+    its police building</a> as crime in the area <a target='_blank'
+    href="http://nymag.com/daily/intelligencer/2016/02/times-square-police-station-to-get-a-makeover.html">has
+    plummeted</a>.</p>
+
+
+    <h3>The Concourse</h3>
+
+    <p>A slew of sounds blend together in the concourse, twenty feet below the
+    surface. The Shuttle (S) train stops at this level. It has one job: transporting 
+    commuters between Times Square and Grand Central.</p>
+
+    <p class='dyn-text' id='1-1'></p>
+
+    <div id='s-chart' class='chart'></div>
+
+    <p>The Upper Mezzanine in Times Square is a coveted spot for musicians. The
+    space opposite where the S train stops is one of three spots in Times Square
+    station for which musicians have to audition. In total, there are thirty such
+    MUSIC sites around the city that are part of <a target='_blank' href="http://web.mta.info/mta/aft/muny/locations.html">MTA’s Art and Design Program</a>.
+    Musicians play a range of instruments including Andean pipes, Korean drums,
+    steel drums, Cajun cellos and Flamenco guitars while their songs span many
+    genres.</p>
+
+    <p>This musical mélange is the primary cause of the concourse cacophony. In its
+    absence, this level is almost quiet.</p>
+
+    <p class='dyn-text' id='1-2'></p>
+
+    <p>There are regulations that the <a target='_blank' href="https://www.osha.gov/pls/oshaweb/owadisp.show_document?p_table=STANDARDS&p_id=9735">Occupational Health and Safety Administration</a>
+    (OSHA) have in place to protect employees from excessive exposure to high noise
+    levels. For an eight-hour workday, noise exposure above 90 decibels is deemed
+    excessive. For every five decibel increase in the noise levels, this duration
+    goes down by half.</p>
+
+    <p class='dyn-text' id='1-3'></p>
+
+    <p>Two transit police officers, Bae and Sandhu, stationed on this level say they
+    are not allowed to use hearing protection because they have to be constantly
+    vigilant. Bae taps the radio attached to his shoulder. “What if there’s a
+    message from Central? What if there’s an emergency?” he asks. These aren’t
+    far-off questions. On the back of terrorist attacks in European cities, even if
+    there are no known immediate, specific threats to the United States, security
+    measures <a target='_blank'
+    href="https://www.dhs.gov/news/2016/03/22/statement-secretary-jeh-c-johnson-attacks-today-brussels-belgium">are
+    increased</a> at the major airports and transit stops in the country. As a
+    result, even though Bae suffers from ringing in his left ear, he has to brook
+    the sounds of the subway station for eight hours a day. He doesn’t know what
+    causes the ringing, but he says it could be a result of his time in the Army or
+    his time working in subway stations. Before Bae and Sandhu were assigned to the
+    Times Square concourse in March 2016, the two officers were stationed in several
+    different stations in Brooklyn.</p>
+
+    <h3>The 1-2-3 Trains</h3>
+
+    <p>The 1-2-3 trains run twenty feet below the Shuttle. Four tracks service these
+    three lines, all of which stop here. This level can get loud, as multiple trains
+    arrive and depart simultaneously, throughout the day and night.</p>
+
+    <p class='dyn-text' id='2-1'></p>
+
+    <div id='red-chart' class='chart'></div>
+
+    <p class='dyn-text' id='2-2'></p>
+
+    <p>It’s not just these fleeting spikes in sound intensity that have adverse
+    effects on those who spend their working day in the underground station.</p>
+
+    <p>Hasan Bachu runs a newsstand meters away, between the platforms for the 1-2-3
+    trains and the platform for the 7 trains. For the past eight years, he’s
+    occupied the same spot for eight hours a day, enduring the crowds and the
+    clamor. “I cannot hear customers and customers cannot hear me,” he says. He
+    insists that the loud music, a constant from between 3 and 7 PM most days, is
+    more insufferable than the trains. “Those four hours,” he says, “I have a
+    headache.” He also says customers are less likely to stop by at his shop during
+    those hours.</p>
+
+    <p>This is frustrating for Bachu and others vendors who work at the shops in the
+    mezzanines. One of Bachu’s employees has experienced a constant ringing noise in
+    his ear that led him to meet with an audiologist, though it’s not clear that the
+    subway noise is the cause.</p>
+
+    <p>Ramon Zabala, a guitarist who performs across from Bachu’s shop a few times a
+    week, agrees with Bachu that the station is loud. While Bachu resents Zabala’s
+    presence and the sounds coming from his amplifier, Zabala instead takes issue
+    with the train noise, which often interferes with his playing. “Sometimes I
+    cannot hear myself,” he says. He prefers quieter areas, but, not being part of
+    the <a target='_blank'
+    href='http://web.mta.info/mta/aft/muny/factsheet.html'>MTA Arts &amp; Design
+    MUSIC program</a>, he doesn’t have a choice: in order to make money playing
+    music, he travels from station to station, looking for any location where a
+    rival musician hasn’t yet set up shop.</p>
+
+    <p>Specific complaints may differ, but everyone agrees: subway stations are way
+    too loud.</p>
+
+    <p>Tony Evans, an acoustic consultant for ATS Consulting, says that transit
+    systems aren't obligated to fix noise problems unless they exceed the FTA
+    criteria and the repair would be cost effective. In his experience, he finds
+    that the sound intensities are annoying but within the levels specified by the
+    FTA, which provides little incentive for the MTA to address the issues and
+    ameliorate the situation.</p>
+
+    <p>But, since the mid-1970s, the MTA has included budget items to address the
+    noise levels in the subway. During Michael Bloomberg’s term as Mayor, the City
+    even implemented a noise code for transit operations, which required, among
+    other things, minimizing curve and break screeches and limiting sound levels to
+    80 decibels by 2012. The code also encouraged the MTA to “develop noise
+    mitigation strategies and incorporate such plans into their capital planning
+    goals.”</p>
+
+    <p>According to MTA spokesperson Kevin Ortiz, the efforts to quiet track-related
+    noise have included the installation of continuously welded rail and resilient
+    rail fasteners, as well as track lubrication along sharp curves. The trains also
+    use ring-damped wheels now, which reduce the noise. Composite brake shoes, which
+    are meant to eliminate screeching stops, are used on all subway cars.</p>
+
+    <p>Yet on the 1-2-3 platform, the trains screech while pulling in and
+    departing.</p>
+
+    <p>Ortiz also says that many subway stations have noise absorbing barriers, as
+    well as acoustic materials above and below the platforms, which help create a
+    quieter environment compared to two decades ago. But in the absence of
+    historical data, it is hard to say how much progress has been made.</p>
+
+    <h3>The 7 Train</h3>
+
+    <p class='dyn-text' id='3-1'></p>
+
+    <div id='purple-chart' class='chart'></div>
+
+    <p>Eddie, an MTA cleaner who works at multiple subway stations including Times
+    Square, has worn earplugs since he started working for the MTA nineteen years
+    ago. He recognized then that his job would expose him to extended periods of
+    loud noise that might damage his hearing, and he wanted to protect his hearing
+    for one simple reason: “I just enjoy listening to music,” Eddie says. “I wanted
+    to continue doing that.” Like the police officers, he is not allowed to wear
+    earplugs, lest he miss an announcement over the PA system—only train conductors
+    and operators, he says, are allowed to use hearing protection equipment — but so
+    far, he has not been reprimanded. Like Bachu, it’s not the sound of the trains
+    that bother him, but the musicians. “Especially those drummer boys,” he
+    says.</p>
+
+    <p>Dr. Marc B Kramer, an audiologist, treats hearing loss and advises the New
+    York City Employee Retirement System (NYCERS). He says, “screeches are annoying,
+    much like fingernails on blackboards, but that doesn’t mean they’re hazardous.”
+    It boils down to how much exposure and for how long.</p>
+
+    <p>Sudden variations in sounds can be jarring as well. According to James
+    Cowen’s <i>The Effects of Sound on People</i>, stress reactions can be caused by “an
+    individual’s sensitivity to different sources and types of noise.” Cowen goes on
+    to say that low sound levels associated with any threatening source can result
+    in a greater stress reaction than high levels associated with a non-threatening
+    source or a source that individuals are acclimatised to. In the subway, the
+    plethora of sounds can result in greater stress.</p>
+
+    <p class='dyn-text' id='3-2'></p>
+
+    <p>Dr. Frank Goldsmith is the Director of Occupational Health at Transport
+    Workers Union (TWU) Local 100, which has over 40,000 members. He says that the
+    MTA has a hearing protection program that identifies the job titles most at risk
+    for compromised hearing, and coordinates annual hearing tests and provides basic
+    hearing protection for workers in these positions. But Goldsmith argues this
+    does not address the root of the problem: loud trains.</p>
+
+    <p>Goldsmith also points out that workers can be wary of their jobs receiving
+    extra scrutiny from the MTA, in case that scrutiny makes the MTA reconsider
+    whether that job needs to exist in the first place. For the workers, it’s
+    Catch-22 situation: if they don’t raise their concerns, they could suffer from
+    hearing loss; if they do, they might lose their jobs. Even jobs covered by this
+    hearing conservation program come with caveats. For example, according to
+    Goldsmith, employees cannot file for compensation from New York State until they
+    have been away from the job for at least six months.</p>
+
+    <p>The New York City Subway is an old system, and its noise problem was
+    recognized at least as early as 1930, when the Noise Abatement Commission
+    attempted to record and study sounds from around the city. Nearly a century
+    later, the subway has changed very little: the Second Avenue line is still under
+    construction, and the trains are still too loud for comfort. Somehow, the city’s
+    kaleidoscopic assortment of inhabitants have learned to tolerate New York’s less
+    desirable features: the sweet aroma of sewage in the summertime, an underground
+    empire of rats, the screeching clamor of the subway system. And other New
+    Yorkers.</p>
+
+    <div id='footer'>
+    <ul>
+      <li>Sound comparisons from the <a target='_blank' href="https://www.nidcd.nih.gov/health/i-love-what-i-hear-common-sounds">National Institutes of Health</a>.</li>
+      
+      <li>Exposure levels from <a target='_blank' href="https://www.osha.gov/pls/oshaweb/owadisp.show_document?p_table=STANDARDS&p_id=9735">Occupational Safety and Health Administration</a>.</li>
+      </ul>
+    </div>
+
+    </div>
+
+    </body>
+</html>
